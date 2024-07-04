@@ -1,6 +1,6 @@
 # Veriprac
 
-Verifier and homework packer.
+Verifier and homework packager.
 
 ## Build
 It is prepared to build in IntelliJ, but should work alone with Maven.
