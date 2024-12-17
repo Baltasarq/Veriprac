@@ -82,7 +82,7 @@ public final class Util {
         // Create the zip file
         try (var zf = new net.lingala.zip4j.ZipFile( FILE_PATH.getAbsolutePath() ))
         {
-            zf.addFolder( new net.lingala.zip4j.NativeStorage( targetPath ));
+            zf.addFolder( new File( targetPath ) );
         } catch(net.lingala.zip4j.exception.ZipException exc) {
             throw new IOException( exc.getMessage() );
         }
