@@ -3,6 +3,7 @@
 
 import ui.MainWindowCore;
 
+
 public class Ppal {
     public static void main(String[] args)
     {
@@ -17,9 +18,11 @@ public class Ppal {
             System.setProperty( "swing.aatext", "true" );
             System.setProperty( "awt.useSystemAAFontSettings", "on" );
         } catch(Exception ignored) {
-            System.err.println( "[ERR] unable to configure GUI: " + ignored.getMessage() );
+            System.err.println( "[ERR] unable to configure GUI: "
+                                    + ignored.getMessage() );
         }
 
+        // Launch app
         new MainWindowCore();
     }
 }
