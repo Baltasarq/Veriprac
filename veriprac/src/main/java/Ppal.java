@@ -17,8 +17,9 @@ public class Ppal {
             System.setProperty( "swing.aatext", "true" );
             System.setProperty( "awt.useSystemAAFontSettings", "on" );
         } catch(Exception ignored) {
+            System.err.println( "[ERR] unable to configure GUI: " + ignored.getMessage() );
         }
 
-        MainWindowCore win = new MainWindowCore();
+        new MainWindowCore();
     }
 }

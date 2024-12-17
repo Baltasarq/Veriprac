@@ -4,8 +4,6 @@
 package core;
 
 
-import ui.MainWindowCore;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.Normalizer;
