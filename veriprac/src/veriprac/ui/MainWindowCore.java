@@ -1,12 +1,12 @@
 // Veriprac (c) 2024 Baltasar MIT License <baltasarq@gmail.com>
 
 
-package ui;
+package veriprac.ui;
 
 
-import core.AppInfo;
-import core.PractVerifier;
-import core.Util;
+import veriprac.core.AppInfo;
+import veriprac.core.PractVerifier;
+import veriprac.core.Util;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
@@ -146,7 +146,7 @@ public class MainWindowCore {
     }
 
     /** @return the window ui. */
-    public MainWindowUI getMainUI()
+    public final MainWindowUI getMainUI()
     {
         return this.winUi;
     }

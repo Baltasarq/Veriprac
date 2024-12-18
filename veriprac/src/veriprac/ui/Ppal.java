@@ -1,7 +1,7 @@
 // Veriprac (c) 2024 Baltasar MIT License <baltasarq@gmail.com>
 
 
-import ui.MainWindowCore;
+package veriprac.ui;
 
 
 public class Ppal {

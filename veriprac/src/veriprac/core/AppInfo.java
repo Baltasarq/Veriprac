@@ -1,4 +1,8 @@
-package core;
+// Veriprac (c) 2024 Baltasar MIT License <baltasarq@gmail.com>
+
+
+package veriprac.core;
+
 
 public class AppInfo {
     public static final String NAME = "Veriprac";

@@ -1,14 +1,14 @@
 // Veriprac (c) 2024 Baltasar MIT License <baltasarq@gmail.com>
 
 
-package ui;
+package veriprac.ui;
 
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
-import core.AppInfo;
+import veriprac.core.AppInfo;
 
 
 public class MainWindowUI extends Frame {
@@ -56,7 +56,7 @@ public class MainWindowUI extends Frame {
     {
         try {
             ImageIcon iconImg = new ImageIcon(
-                    this.getClass().getClassLoader().getResource( "pencil.png" ) );
+                    this.getClass().getClassLoader().getResource( "res/pencil.png" ) );
             this.setIconImage( iconImg.getImage() );
         } catch(Exception e)
         {
@@ -286,7 +286,7 @@ public class MainWindowUI extends Frame {
         return this.lblStatus;
     }
 
-    public void setStatus()
+    public final void setStatus()
     {
         this.lblStatus.setText( "Ready" );
     }

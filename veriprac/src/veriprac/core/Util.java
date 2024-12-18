@@ -1,7 +1,7 @@
 // Veriprac (c) 2024 Baltasar MIT License <baltasarq@gmail.com>
 
 
-package core;
+package veriprac.core;
 
 
 import java.io.File;
