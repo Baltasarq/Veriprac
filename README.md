@@ -8,6 +8,8 @@ Comprueba que un mínimo de documentación y estructura están presentes antes d
 
 *It checks that a minimum of documentation and structure is present before packaging it all in a **zip** file.*
 
+![Veriprac](design/scrshot-veriprac1.png)
+
 ## Build & run
 Este proyecto está preparado para ejecutarse en **NetBeans**, pero puede construirse con `ant` de forma independiente.
 
