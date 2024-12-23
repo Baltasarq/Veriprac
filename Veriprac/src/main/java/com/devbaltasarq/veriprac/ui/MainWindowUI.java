@@ -1,14 +1,14 @@
 // Veriprac (c) 2024 Baltasar MIT License <baltasarq@gmail.com>
 
 
-package veriprac.ui;
+package com.devbaltasarq.veriprac.ui;
 
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
-import veriprac.core.AppInfo;
+import com.devbaltasarq.veriprac.core.AppInfo;
 
 
 public class MainWindowUI extends Frame {
@@ -56,7 +56,8 @@ public class MainWindowUI extends Frame {
     {
         try {
             ImageIcon iconImg = new ImageIcon(
-                    this.getClass().getClassLoader().getResource( "res/pencil.png" ) );
+                                    this.getClass().getClassLoader()
+                                    .getResource( "pencil.png" ) );
             this.setIconImage( iconImg.getImage() );
         } catch(Exception e)
         {

@@ -1,7 +1,7 @@
 // Veriprac (c) 2024 Baltasar MIT License <baltasarq@gmail.com>
 
 
-package veriprac.core;
+package com.devbaltasarq.veriprac.core;
 
 
 public class AppInfo {

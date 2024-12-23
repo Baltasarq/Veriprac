@@ -1,12 +1,12 @@
 // Veriprac (c) 2024 Baltasar MIT License <baltasarq@gmail.com>
 
 
-package veriprac.ui;
+package com.devbaltasarq.veriprac.ui;
 
 
-import veriprac.core.AppInfo;
-import veriprac.core.PractVerifier;
-import veriprac.core.Util;
+import com.devbaltasarq.veriprac.core.AppInfo;
+import com.devbaltasarq.veriprac.core.PractVerifier;
+import com.devbaltasarq.veriprac.core.Util;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;

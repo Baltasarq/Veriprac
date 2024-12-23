@@ -1,7 +1,7 @@
 // Veriprac (c) 2024 Baltasar MIT License <baltasarq@gmail.com>
 
 
-package veriprac.ui;
+package com.devbaltasarq.veriprac.ui;
 
 
 public class Ppal {
