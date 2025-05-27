@@ -11,14 +11,14 @@ Comprueba que un mínimo de documentación y estructura están presentes antes d
 ![Veriprac](design/scrshot-veriprac1.png)
 
 ## Build & run
-Este proyecto está preparado para ejecutarse en **NetBeans**, pero puede construirse con `ant` de forma independiente.
+Este proyecto está preparado para ejecutarse en **NetBeans**, pero puede construirse con `maven` de forma independiente.
 
-*This project is prepared to build in **NetBeans**, but builds independently alone with `ant`.*
+*This project is prepared to build in **NetBeans**, but builds independently alone with `maven`.*
 
 ```bash
 $ cd Veriprac/veriprac
-$ ant
-$ java -jar dist/Veriprac.jar
+$ mvn package
+$ java -jar target/Veriprac-1.0.jar
 ```
 
 ## Instructions
