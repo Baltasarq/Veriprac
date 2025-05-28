@@ -6,6 +6,8 @@ package com.devbaltasarq.veriprac.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.Normalizer;
 
 
@@ -73,6 +75,7 @@ public final class Util {
             String targetPath) throws IOException
     {
         final File FILE_PATH = new File( Util.buildZipFileName( usrHome, nif, surname, name ));
+        final File TEMP_PATH = File.createTempFile( FILE_PATH.toString(), "zip" );
 
         // Delete the zip file if it exists
         if ( FILE_PATH.exists() ) {
@@ -80,13 +83,16 @@ public final class Util {
         }
 
         // Create the zip file
-        try (var zf = new net.lingala.zip4j.ZipFile( FILE_PATH.getAbsolutePath() ))
+        try (var zf = new net.lingala.zip4j.ZipFile( TEMP_PATH.getCanonicalPath() ))
         {
             zf.addFolder( new File( targetPath ) );
         } catch(net.lingala.zip4j.exception.ZipException exc) {
             throw new IOException( exc.getMessage() );
         }
 
-        return;
+        Files.copy(
+                TEMP_PATH.toPath(),
+                FILE_PATH.toPath(),
+                StandardCopyOption.REPLACE_EXISTING );
     }
 }
