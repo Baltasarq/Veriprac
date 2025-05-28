@@ -36,7 +36,7 @@ public final class Util {
 
     public static String buildZipFileName(String usrHome, String nif, String surname, String name)
     {
-        final String FILE_NAME_FMT = "$surname_$name-$nif";
+        final String FILE_NAME_FMT = "$surname_$name-$nif.zip";
         String fileName = FILE_NAME_FMT
                 .replace( "$surname", surname )
                 .replace( "$name", name )
