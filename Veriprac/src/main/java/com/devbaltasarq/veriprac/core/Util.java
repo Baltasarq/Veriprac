@@ -36,13 +36,14 @@ public final class Util {
 
     public static String buildZipFileName(String usrHome, String nif, String surname, String name)
     {
-        final String FILE_NAME_FMT = "$surname_$name-$nif.zip";
+        final String FILE_NAME_FMT = "$surname_$name-$nif";
         String fileName = FILE_NAME_FMT
                 .replace( "$surname", surname )
                 .replace( "$name", name )
                 .replace( "$nif", nif ).toLowerCase();
 
-        return new File( usrHome, encodeAsPlain( fileName ) ).getAbsolutePath();
+        return new File( usrHome,
+                         encodeAsPlain( fileName ) + ".zip" ).getAbsolutePath();
     }
 
     public static String buildMarksFileContents(String nif, String surname, String name, String summary)
