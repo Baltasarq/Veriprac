@@ -318,12 +318,15 @@ public class MainWindowCore {
                         AppInfo.NAME,
                         JOptionPane.INFORMATION_MESSAGE );
             } catch(IOException exc) {
+                this.log( "Aborted due to: " + exc.getMessage() );
                 javax.swing.JOptionPane.showMessageDialog(
                                 this.winUi,
                                 exc.getMessage(),
                                 AppInfo.NAME,
                                 javax.swing.JOptionPane.ERROR_MESSAGE );
             }
+        } else {
+            this.log( "exercise not packed, since id did not verify" );
         }
 
         return;

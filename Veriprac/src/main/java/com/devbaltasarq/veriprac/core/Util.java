@@ -5,10 +5,17 @@ package com.devbaltasarq.veriprac.core;
 
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.Normalizer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 
 public final class Util {
@@ -66,7 +73,30 @@ public final class Util {
                 .replace( "$summary", summary );
 
     }
-
+    
+    public static void pack(final Path TARGET_PATH, final Path ZIP_FILE)
+            throws IOException
+    {
+        try (
+                FileOutputStream fos = new FileOutputStream( ZIP_FILE.toFile() );
+                ZipOutputStream zos = new ZipOutputStream( fos ) )
+        {
+            Files.walkFileTree( TARGET_PATH, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                        throws IOException
+                {
+                    zos.putNextEntry(
+                            new ZipEntry(
+                                TARGET_PATH.relativize( file ).toString() ));
+                    Files.copy( file, zos );
+                    zos.closeEntry();
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        }
+    }
+    
     public static void buildZip(
             String nif,
             String surname,
@@ -77,10 +107,23 @@ public final class Util {
         final File FILE_PATH = new File( Util.buildZipFileName( usrHome, nif, surname, name ));
         final File TEMP_PATH = File.createTempFile( FILE_PATH.toString(), "zip" );
 
-        // Delete the zip file if it exists
-        if ( FILE_PATH.exists() ) {
-            FILE_PATH.delete();
-        }
+        pack( Path.of( targetPath ), TEMP_PATH.toPath() );
+        
+        Files.copy(
+                TEMP_PATH.toPath(),
+                FILE_PATH.toPath(),
+                StandardCopyOption.REPLACE_EXISTING );
+    }
+
+    public static void buildZipWithNetLingala(
+            String nif,
+            String surname,
+            String name,
+            String usrHome,
+            String targetPath) throws IOException
+    {
+        final File FILE_PATH = new File( Util.buildZipFileName( usrHome, nif, surname, name ));
+        final File TEMP_PATH = File.createTempFile( FILE_PATH.toString(), "zip" );
 
         // Create the zip file
         try (var zf = new net.lingala.zip4j.ZipFile( TEMP_PATH.getCanonicalPath() ))
