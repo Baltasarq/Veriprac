@@ -7,11 +7,6 @@ package com.devbaltasarq.veriprac.ui;
 public class Ppal {
     public static void main(String[] args)
     {
-        launchGuiApp();
-    }
-
-    private static void launchGuiApp()
-    {
         // Prepare look & feel, if possible
         try {
             System.setProperty( "awt.aatext", "true" );
@@ -21,8 +16,13 @@ public class Ppal {
             System.err.println( "[ERR] unable to configure GUI: "
                                     + ignored.getMessage() );
         }
+        
+        launchGuiApp();
+    }
 
-        // Launch app
+    private static void launchGuiApp()
+    {
+        // Launch app with GUI
         new MainWindowCore();
     }
 }
