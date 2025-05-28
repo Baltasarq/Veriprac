@@ -218,9 +218,9 @@ public class MainWindowCore {
     /** Prepares Veriprac's logging capabilities for this exercise. */
     private void prepareLog()
     {
-        final Path LOG_FILE_PATH = Paths.get(
-                                    this.verifier.getPath().getAbsolutePath(),
-                                    "veriprac.log" );
+        final Path LOG_FILE_PATH = Paths.get( this.USER_HOME,
+                                              AppInfo.NAME.toLowerCase()
+                                              + ".log" );
         
         // Close the current log
         if ( this.logger != null ) {
@@ -248,6 +248,7 @@ public class MainWindowCore {
                 }
             });
             
+            this.log( AppInfo.COMPLETE_NAME );
             this.log( "Log created with PATH: " + LOG_FILE_PATH );
         } catch(IOException exc) {
             JOptionPane.showMessageDialog(

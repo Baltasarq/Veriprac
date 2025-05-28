@@ -104,35 +104,12 @@ public final class Util {
             String usrHome,
             String targetPath) throws IOException
     {
-        final File FILE_PATH = new File( Util.buildZipFileName( usrHome, nif, surname, name ));
+        final File FILE_PATH = new File(
+                            Util.buildZipFileName( usrHome, nif, surname, name ));
         final File TEMP_PATH = File.createTempFile( FILE_PATH.toString(), "zip" );
 
         pack( Path.of( targetPath ), TEMP_PATH.toPath() );
         
-        Files.copy(
-                TEMP_PATH.toPath(),
-                FILE_PATH.toPath(),
-                StandardCopyOption.REPLACE_EXISTING );
-    }
-
-    public static void buildZipWithNetLingala(
-            String nif,
-            String surname,
-            String name,
-            String usrHome,
-            String targetPath) throws IOException
-    {
-        final File FILE_PATH = new File( Util.buildZipFileName( usrHome, nif, surname, name ));
-        final File TEMP_PATH = File.createTempFile( FILE_PATH.toString(), "zip" );
-
-        // Create the zip file
-        try (var zf = new net.lingala.zip4j.ZipFile( TEMP_PATH.getCanonicalPath() ))
-        {
-            zf.addFolder( new File( targetPath ) );
-        } catch(net.lingala.zip4j.exception.ZipException exc) {
-            throw new IOException( exc.getMessage() );
-        }
-
         Files.copy(
                 TEMP_PATH.toPath(),
                 FILE_PATH.toPath(),
