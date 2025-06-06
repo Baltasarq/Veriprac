@@ -322,7 +322,7 @@ public class MainWindowCore {
                 this.log( "Aborted due to: " + exc.getMessage() );
                 javax.swing.JOptionPane.showMessageDialog(
                                 this.winUi,
-                                exc.getMessage(),
+                                "Aborted Zipping: " + exc.getMessage(),
                                 AppInfo.NAME,
                                 javax.swing.JOptionPane.ERROR_MESSAGE );
             }
@@ -398,6 +398,19 @@ public class MainWindowCore {
         try (var output = new PrintStream( FILE_NAME )) {
             output.println( Util.buildMarksFileContents(
                                     NIF, SURNAME, NAME, SUMMARY ) );
+            output.close();
+        } catch(IOException exc) {
+            final String MSG = "I/O Error creating '"
+                                + FILE_NAME
+                                + "': " + exc.getMessage();
+
+            this.log( MSG );
+            JOptionPane.showMessageDialog(
+                                this.getMainUI(),
+                                MSG,
+                                AppInfo.NAME,
+                                JOptionPane.ERROR_MESSAGE );
+            throw exc;
         }
 
         this.log( "Marks file created." );
