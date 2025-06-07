@@ -43,8 +43,7 @@ public class MainWindowCore {
                 this.getMainUI().getChkSurname(), this.getMainUI().getEdSurname(),
                 this.getMainUI().getChkEmail(), this.getMainUI().getEdEmail(),
                 this.getMainUI().getChkSummary(), this.getMainUI().getEdSummary(),
-                this.getMainUI().getChkType(), this.getMainUI().getEdNum(),
-                this.getMainUI().getChkPath(), this.getMainUI().getEdPath() );
+                this.getMainUI().getChkType(), this.getMainUI().getEdNum() );
 
         this.VERIFY_CHECKS = new EnumMap<>( Map.of(
                 PractVerifier.Id.DirExists, this.winUi.getChkDirExists(),
@@ -58,9 +57,7 @@ public class MainWindowCore {
                 Data.SURNAME, this.winUi.getEdSurname(),
                 Data.NAME, this.winUi.getEdName(),
                 Data.EMAIL, this.winUi.getEdEmail(),
-                Data.SUMMARY, this.winUi.getEdSummary(),
-                Data.PATH, this.winUi.getEdPath()
-        ));
+                Data.SUMMARY, this.winUi.getEdSummary() ));
 
         this.setListeners();
         this.USER_HOME = this.retrieveUserHome();
@@ -85,9 +82,9 @@ public class MainWindowCore {
     private void setListeners()
     {
         this.winUi.getOpQuit().addActionListener(
-                                (evt) -> this.onQuit());
+                (evt) -> this.onQuit());
         this.winUi.getOpAbout().addActionListener(
-                                (evt) -> this.onAbout());
+                (evt) -> this.onAbout());
         this.winUi.getOpOpen().addActionListener(
                 (evt) -> this.onOpen() );
 
@@ -154,7 +151,8 @@ public class MainWindowCore {
     /** Triggered by the File >> Open. */
     private void onOpen()
     {
-        final var OPEN_DLG = new JFileChooser( this.verifier.getPath().getAbsolutePath() );
+        final var OPEN_DLG = new JFileChooser(
+                                    this.verifier.getPath().getAbsolutePath() );
         final int RESPONSE_OK = JFileChooser.APPROVE_OPTION;
         
         OPEN_DLG.setDialogTitle( "Open directory" );
@@ -191,12 +189,18 @@ public class MainWindowCore {
       */
     private String getData(Data data)
     {
-        String toret = this.DATA_FIELDS.get( data ).getText().trim();
-
+        String toret;
+        
+        if ( data == Data.PATH ) {
+            toret = this.verifier.getPath().getAbsolutePath();
+        } else {
+            toret = this.DATA_FIELDS.get( data ).getText().trim();
+        }
+        
         if ( data == Data.NIF ) {
             toret = toret.toUpperCase();
         }
-
+        
         return toret;
     }
 
@@ -206,13 +210,7 @@ public class MainWindowCore {
     private void setPath(String path)
     {
         this.verifier.setPath( new File( path ) );
-
-        // Prepare the path to visualize
-        if ( path.length() > 30 ) {
-            path = "..." + path.substring( path.length() - 30 );
-        }
-
-        this.winUi.getEdPath().setText( path );
+        this.winUi.setShownPath( path );
     }
     
     /** Prepares Veriprac's logging capabilities for this exercise. */
@@ -304,33 +302,60 @@ public class MainWindowCore {
                     + " and verified: " + verified );
         return fieldsChecked && verified;
     }
+    
+    private void enableUI()
+    {
+        this.enableUI( true );
+    }
+    
+    private void enableUI(boolean enable)
+    {
+        String packLbl;
+        
+        if ( !enable ) {
+            packLbl = "Packing";
+            this.winUi.setStatus( "Working..." );
+        } else {
+            packLbl = "Pack";
+            this.winUi.setStatus();
+        }
+        
+        this.winUi.getBtPack().setLabel( packLbl );
+        this.winUi.getBtPack().setEnabled( enable );
+    }
 
     /** Triggered by the Pack button. This starts the magic. */
     private void onPack()
     {
-        if ( this.chk() ) {
-            try {
-                this.createMarksFile();
-                this.buildZip();
+        final MainWindowCore SELF = this;
+        
+        new Thread( () -> {
+            if ( SELF.chk() ) {
+                SELF.enableUI( false );
+        
+                try {
+                    SELF.createMarksFile();
+                    SELF.buildZip();
 
-                javax.swing.JOptionPane.showMessageDialog(
-                        this.winUi,
-                        "Zip file created at: " + this.USER_HOME,
-                        AppInfo.NAME,
-                        JOptionPane.INFORMATION_MESSAGE );
-            } catch(IOException exc) {
-                this.log( "Aborted due to: " + exc.getMessage() );
-                javax.swing.JOptionPane.showMessageDialog(
-                                this.winUi,
-                                "Aborted Zipping: " + exc.getMessage(),
-                                AppInfo.NAME,
-                                javax.swing.JOptionPane.ERROR_MESSAGE );
+                    javax.swing.JOptionPane.showMessageDialog(
+                            SELF.winUi,
+                            "Zip file created at: " + SELF.USER_HOME,
+                            AppInfo.NAME,
+                            JOptionPane.INFORMATION_MESSAGE );
+                } catch(IOException exc) {
+                    SELF.log( "Aborted due to: " + exc.getMessage() );
+                    javax.swing.JOptionPane.showMessageDialog(
+                            SELF.winUi,
+                            "Aborted Zipping: " + exc.getMessage(),
+                            AppInfo.NAME,
+                            javax.swing.JOptionPane.ERROR_MESSAGE );
+                } finally {
+                    SELF.enableUI();
+                }
+            } else {
+                SELF.log( "exercise not packed, since it did not verify" );
             }
-        } else {
-            this.log( "exercise not packed, since id did not verify" );
-        }
-
-        return;
+        }).start();
     }
 
     /** Checks that the data fields have valid data. */
@@ -363,7 +388,7 @@ public class MainWindowCore {
         }
         
         // Check the PATH field
-        final String PATH = this.getMainUI().getEdPath().getText().trim();
+        final String PATH = this.verifier.getPath().getAbsolutePath();
         if ( PATH.equals( this.USER_HOME ) ) {
             final String PATH_MSG = "Invalid PATH: can't be user's home.";
             

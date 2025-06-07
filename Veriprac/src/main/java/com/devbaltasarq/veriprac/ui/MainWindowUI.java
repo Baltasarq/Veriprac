@@ -12,13 +12,13 @@ import com.devbaltasarq.veriprac.core.AppInfo;
 
 
 public class MainWindowUI extends Frame {
-    private static final int WIDTH = 400;
-    private static final int HEIGHT = 525;
+    private static final int INI_WIDTH = 400;
+    private static final int INI_HEIGHT = 525;
 
     public MainWindowUI()
     {
         final Font SYS_FONT = Font.decode( null );
-        final Dimension WIN_DIMENSION = new Dimension( WIDTH, HEIGHT );
+        final Dimension WIN_DIMENSION = new Dimension( INI_WIDTH, INI_HEIGHT );
         final Dimension GAP_DIMENSION = new Dimension( 5, 5 );
         final BorderLayout LY_BORDER = new BorderLayout();
         final Panel PNL_MAIN = new Panel( new BorderLayout() );
@@ -329,19 +329,28 @@ public class MainWindowUI extends Frame {
     {
         return this.edName;
     }
-    public Checkbox getChkName() { return this.chkName; }
+    public Checkbox getChkName()
+    {
+        return this.chkName;
+    }
 
     public TextField getEdEmail()
     {
         return this.edEmail;
     }
-    public Checkbox getChkEmail() { return this.chkEmail; }
+    public Checkbox getChkEmail()
+    {
+        return this.chkEmail;
+    }
 
     public TextField getEdNif()
     {
         return this.edNif;
     }
-    public Checkbox getChkNif() { return this.chkNif; }
+    public Checkbox getChkNif()
+    {
+        return this.chkNif;
+    }
 
     public TextField getEdNum()
     {
@@ -350,24 +359,33 @@ public class MainWindowUI extends Frame {
     public Choice getEdType() {
         return this.edType;
     }
-    public Checkbox getChkType() { return this.chkType; }
+    public Checkbox getChkType()
+    {
+        return this.chkType;
+    }
 
-    public TextField getEdSurname() {
+    public TextField getEdSurname()
+    {
         return this.edSurname;
     }
-    public Checkbox getChkSurname() { return this.chkSurname; }
+    public Checkbox getChkSurname()
+    {
+        return this.chkSurname;
+    }
 
     public TextField getEdSummary()
     {
         return this.edSummary;
     }
-    public Checkbox getChkSummary() { return this.chkSummary; }
-
-    public TextField getEdPath()
+    public Checkbox getChkSummary()
     {
-        return this.edPath;
+        return this.chkSummary;
     }
-    public Checkbox getChkPath() { return this.chkPath; }
+    
+    public Checkbox getChkPath()
+    {
+        return this.chkPath;
+    }
 
     public Checkbox getChkDirExists()
     {
@@ -387,6 +405,16 @@ public class MainWindowUI extends Frame {
     public Checkbox getChkPDFExists()
     {
         return this.chkPDF;
+    }
+    
+    public void setShownPath(String path)
+    {
+        // Prepare the path to visualize
+        if ( path.length() > 30 ) {
+            path = "..." + path.substring( path.length() - 30 );
+        }
+        
+        this.edPath.setText( path );
     }
 
     private Button btOpen;
