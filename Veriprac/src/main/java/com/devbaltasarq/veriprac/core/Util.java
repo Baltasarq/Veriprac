@@ -12,10 +12,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.FileVisitOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.Normalizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import java.util.EnumSet;
 
 
 public final class Util {
@@ -82,15 +84,23 @@ public final class Util {
                 FileOutputStream fos = new FileOutputStream( ZIP_FILE.toFile() );
                 ZipOutputStream zos = new ZipOutputStream( fos ) )
         {
-            Files.walkFileTree( TARGET_PATH, new SimpleFileVisitor<Path>() {
+            final Path REAL_START_PATH = TARGET_PATH.toRealPath();
+            
+            Files.walkFileTree(
+                    REAL_START_PATH,
+                    EnumSet.of( FileVisitOption.FOLLOW_LINKS ),
+                    Integer.MAX_VALUE,
+                    new SimpleFileVisitor<Path>()
+            {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
                         throws IOException
-                {
+                {   
                     zos.putNextEntry(
                             new ZipEntry(
-                                TARGET_PATH.relativize( file ).toString() ));
+                                REAL_START_PATH.relativize( file ).toString() ));
                     Files.copy( file, zos );
+                    
                     zos.closeEntry();
                     return FileVisitResult.CONTINUE;
                 }

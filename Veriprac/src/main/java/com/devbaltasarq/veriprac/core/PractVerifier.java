@@ -91,7 +91,10 @@ public class PractVerifier {
         return toret;
     }
 
-    /** @return whether this item vierifies or not. */
+    /** Decides whether this item verifies or not.
+      * @param id the item id to verify.
+      * @return whether this item verifies or not.
+      */
     public boolean doesVerify(Id id)
     {
         return this.items.contains( id );
@@ -122,8 +125,8 @@ public class PractVerifier {
     }
 
     /** Checks that there are PDF files,
-      * instead of doc or docx files.
-      * @return true if the doucmentation verifies, false otherwise.
+      * instead of odt, doc or docx files.
+      * @return true if the documentation verifies, false otherwise.
       */
     private boolean chkDocumentation()
     {
