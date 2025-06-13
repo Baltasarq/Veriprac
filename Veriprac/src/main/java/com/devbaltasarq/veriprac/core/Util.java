@@ -96,9 +96,14 @@ public final class Util {
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
                         throws IOException
                 {   
-                    zos.putNextEntry(
-                            new ZipEntry(
-                                REAL_START_PATH.relativize( file ).toString() ));
+                    // Relativize the file path, and replace backslashes with
+                    // forward slashes (as specification mandates).
+                    String fileName = REAL_START_PATH
+                                        .relativize( file )
+                                        .toString()
+                                        .replace( '\\', '/' );
+                    
+                    zos.putNextEntry( new ZipEntry( fileName ) );
                     Files.copy( file, zos );
                     
                     zos.closeEntry();
