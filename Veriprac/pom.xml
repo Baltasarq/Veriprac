@@ -31,6 +31,6 @@
         </plugins>
     </build>
     <name>Veriprac</name>
-    <version>0.3</version>
+    <version>0.3.3</version>
     <description>Verificador y empaquetador de prácticas.</description>
 </project>
